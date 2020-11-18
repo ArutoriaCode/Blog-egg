@@ -2,6 +2,9 @@
   "extends": "eslint-config-egg",
   "rules": {
     "quotes": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-use-before-define": "off",
+    "space-before-function-paren": "off",
+    "array-bracket-spacing": "off"
   }
 }
