@@ -1,6 +1,8 @@
 # blog-egg
 
-About 仿照 https://www.yevpt.com/ 的一个博客后端，基于egg.js
+About 仿照 https://www.yevpt.com/ 的一个博客的后端，基于egg.js
+
+前端仓库：https://github.com/Chenwangdexiwang/Blog
 
 ## QuickStart
 
