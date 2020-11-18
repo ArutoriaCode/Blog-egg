@@ -38,7 +38,16 @@ module.exports = (err, ctx) => {
     };
   }
 
-  ctx.body = JSON.stringify(body);
+  try {
+    ctx.body = JSON.stringify(body);
+  } catch (error) {
+    ctx.body = {
+      msg: "服务器错误",
+      code: 1500,
+      request: path
+    };
+  }
+
   ctx.status = err.status;
   ctx.set("Content-Type", "application/json");
 };
