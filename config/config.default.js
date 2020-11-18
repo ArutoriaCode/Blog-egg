@@ -13,6 +13,14 @@ module.exports = appInfo => {
   const config = (exports = {
     onerror: {
       all: onError
+    },
+    security: {
+      csrf: {
+        enable: false
+      }
+    },
+    i18n: {
+      defaultLocale: 'zh-CN'
     }
   });
 
@@ -20,7 +28,12 @@ module.exports = appInfo => {
   config.keys = appInfo.name + "_1605596549985_6738";
 
   // add your middleware config here
-  config.middleware = [];
+
+  config.sequelize = {
+    password: "20082009",
+    database: "blog",
+    user: "root"
+  };
 
   // add your user config here
   const userConfig = {
