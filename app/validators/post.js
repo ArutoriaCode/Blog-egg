@@ -13,8 +13,28 @@ class ValidationCreatePost extends LinValidator {
     ];
     this.content = [new Rule("isLength", "文章内容不能为空", { min: 1 })];
   }
+
+  validatetitle() {
+    return typeof this.title !== "number";
+  }
+}
+
+class ValidationGetPosts extends LinValidator {
+  constructor() {
+    super();
+
+    this.pageSize = [
+      new Rule("isOptional"),
+      new Rule("isInt", "必须是整数")
+    ];
+    this.current = [
+      new Rule("isOptional"),
+      new Rule("isInt", "必须是整数")
+    ];
+  }
 }
 
 module.exports = {
-  ValidationCreatePost
+  ValidationCreatePost,
+  ValidationGetPosts
 };

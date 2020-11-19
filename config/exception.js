@@ -1,33 +1,39 @@
 "use strict";
 
-const { isEmpty } = require("lodash");
 const HttpException = require("../exceptions/HttpException");
+const UnauthorizedError = require("koa-jwt2/lib/errors/UnauthorizedError");
 
-function HandlerHttpException(err) {
+function HttpExceptionHandler(err) {
   const body = {
     msg: err.msg,
     code: err.code
   };
 
-  if (!isEmpty(err.data)) {
+  if (err.data) {
     body.data = err.data;
+  }
+
+  if (err.attributes instanceof Object) {
+    Object.assign(body, {
+      ...err.attributes
+    });
   }
 
   return body;
 }
 
 module.exports = (err, ctx) => {
+  console.warn("\n[Error]\t", err);
   const path = `${ctx.request.method} ${ctx.request.url}`;
-  console.error("\nError:", err, err.status, "\n");
 
   let body = {};
   if (err instanceof HttpException) {
-    body = HandlerHttpException(err);
+    body = HttpExceptionHandler(err);
     body.request = path;
-  } else if (err.status === 403) {
+  } else if (err instanceof UnauthorizedError) {
     body = {
-      msg: "禁止访问",
-      code: 1403,
+      msg: "token无效或未授权",
+      code: 1401,
       request: path
     };
   } else {

@@ -8,16 +8,19 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    const { INTEGER, DATE, STRING } = Sequelize;
-    await queryInterface.createTable("Post", {
-      id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      title: STRING(60),
-      img: STRING(248),
-      content: STRING,
-      heart: INTEGER,
-      created_at: DATE,
-      updated_at: DATE,
-      user_id: INTEGER
+
+    const { INTEGER, STRING, DATE } = Sequelize;
+    await queryInterface.createTable("users", {
+      id: {
+        type: INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      username: STRING(28),
+      avatar: STRING(128),
+      password: STRING(248),
+      email: STRING,
+      created_at: DATE
     });
   },
 
@@ -28,6 +31,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("Post");
+    await queryInterface.dropTable("users");
   }
 };

@@ -8,7 +8,7 @@
 const validator = require("validator");
 const ParameterException = require("../exceptions/ParameterException.js");
 const { get, last, set, cloneDeep } = require("lodash");
-const { findMembers } = require('./util')
+const { findMembers } = require("./util");
 
 class LinValidator {
   constructor() {
@@ -58,6 +58,7 @@ class LinValidator {
   async validate(ctx, alias = {}) {
     this.alias = alias;
     const params = this._assembleAllParams(ctx);
+    this.model = ctx.model;
     this.data = cloneDeep(params);
     this.parsed = cloneDeep(params);
 
@@ -85,7 +86,8 @@ class LinValidator {
     let result;
     if (isCustomFunc) {
       try {
-        await this[key](this.data);
+        // 注入model以便查询数据库
+        await this[key](this.data, this.model);
         result = new RuleResult(true);
       } catch (error) {
         result = new RuleResult(
@@ -107,7 +109,7 @@ class LinValidator {
       if (result.pass) {
         // 如果参数路径不存在，往往是因为用户传了空值，而又设置了默认值
         if (param.path.length === 0) {
-          set(this.parsed, [ "default", key ], result.legalValue);
+          set(this.parsed, ["default", key], result.legalValue);
         } else {
           set(this.parsed, param.path, result.legalValue);
         }
@@ -128,32 +130,32 @@ class LinValidator {
 
   _findParam(key) {
     let value;
-    value = get(this.data, [ "query", key ]);
+    value = get(this.data, ["query", key]);
     if (value) {
       return {
         value,
-        path: [ "query", key ]
+        path: ["query", key]
       };
     }
-    value = get(this.data, [ "body", key ]);
+    value = get(this.data, ["body", key]);
     if (value) {
       return {
         value,
-        path: [ "body", key ]
+        path: ["body", key]
       };
     }
-    value = get(this.data, [ "path", key ]);
+    value = get(this.data, ["path", key]);
     if (value) {
       return {
         value,
-        path: [ "path", key ]
+        path: ["path", key]
       };
     }
-    value = get(this.data, [ "header", key ]);
+    value = get(this.data, ["header", key]);
     if (value) {
       return {
         value,
-        path: [ "header", key ]
+        path: ["header", key]
       };
     }
     return {
