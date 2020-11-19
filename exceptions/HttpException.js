@@ -2,7 +2,7 @@
 
 class HttpException extends Error {
   /**
-   * @param {*} attributes 附加参数，最终会合并
+   * @param {*} attributes 附加参数，最终会合并到响应对象中的body，与msg、code同级
    * {
    *  data: {...},
    *  code: 22,
