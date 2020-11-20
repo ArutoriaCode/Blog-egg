@@ -1,5 +1,7 @@
 # blog-egg
 
+Basic分支，用于以后写egg.js的模板。
+
 About 仿照 https://www.yevpt.com/ 的一个博客的后端，基于egg.js
 
 前端仓库：https://github.com/Chenwangdexiwang/Blog
