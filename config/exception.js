@@ -13,10 +13,8 @@ function HttpExceptionHandler(err) {
     body.data = err.data;
   }
 
-  if (err.attributes instanceof Object) {
-    Object.assign(body, {
-      ...err.attributes
-    });
+  if (err.args instanceof Object) {
+    Object.assign(body, err.args);
   }
 
   return body;

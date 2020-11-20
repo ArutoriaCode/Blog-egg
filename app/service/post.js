@@ -6,15 +6,23 @@ const Fail = require("../../exceptions/Fail");
 class PostService extends Service {
   async get() {
     const ctx = this.ctx;
+    const offset = toSafeInteger(ctx.query.cuurent) || 0
+    const limit = toSafeInteger(ctx.query.pageSize) || 8
     const query = {
-      offset: toSafeInteger(ctx.query.cuurent) || 0,
-      limit: toSafeInteger(ctx.query.pageSize) || 8,
+      offset,
+      limit,
       attributes: {
         exclude: ['content']
       }
     };
 
-    return await this.ctx.model.Post.findAndCountAll(query);
+    const { count, rows } = await this.ctx.model.Post.findAndCountAll(query);
+    return {
+      total: count,
+      data: rows,
+      current: offset,
+      pageSize: limit
+    };
   }
 
   async create(post) {

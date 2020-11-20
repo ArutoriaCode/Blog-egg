@@ -11,13 +11,8 @@ const Controller = require("egg").Controller;
 class HomeController extends Controller {
   async posts() {
     await new ValidationGetPosts().validate(this.ctx);
-    const { count, rows } = await this.ctx.service.post.get();
-    Success({
-      data: rows,
-      attributes: {
-        total: count
-      }
-    });
+    const result = await this.ctx.service.post.get();
+    Success(result);
   }
 
   async create() {

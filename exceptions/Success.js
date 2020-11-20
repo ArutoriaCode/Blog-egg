@@ -1,7 +1,7 @@
 "use strict";
 const HttpException = require("./HttpException");
 
-module.exports = function ({ msg, data, code, attributes = {} }) {
+module.exports = function ({ msg, data, code, ...args }) {
   if (typeof arguments[0] === "string") {
     msg = arguments[0];
   }
@@ -10,6 +10,6 @@ module.exports = function ({ msg, data, code, attributes = {} }) {
     code: code || 666,
     status: 200,
     data,
-    attributes
+    ...args
   });
 };
