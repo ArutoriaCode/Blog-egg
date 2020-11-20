@@ -27,14 +27,15 @@ class UserController extends Controller {
         username: user.username,
         email: user.email
       },
-      this.config.jwt.secret,
+      this.app.config.jwt.secret,
       {
         expiresIn: "2h"
       }
     );
 
     Success({
-      data: token
+      data: token,
+      code: this.app.config.code.LOGIN_SUCEESS
     });
   }
 }

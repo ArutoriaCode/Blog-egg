@@ -13,8 +13,8 @@ function HttpExceptionHandler(err) {
     body.data = err.data;
   }
 
-  if (err.args instanceof Object) {
-    Object.assign(body, err.args);
+  if (err.attributes instanceof Object) {
+    Object.assign(body, err.attributes);
   }
 
   return body;
@@ -22,6 +22,7 @@ function HttpExceptionHandler(err) {
 
 module.exports = (err, ctx) => {
   console.warn("\n[Error]\t", err);
+  ctx.set("Content-Type", "application/json");
   const path = `${ctx.request.method} ${ctx.request.url}`;
 
   let body = {};
@@ -53,5 +54,4 @@ module.exports = (err, ctx) => {
   }
 
   ctx.status = err.status;
-  ctx.set("Content-Type", "application/json");
 };

@@ -21,6 +21,11 @@ module.exports = appInfo => {
     },
     i18n: {
       defaultLocale: 'zh-CN'
+    },
+    listen: {
+      port: 7001,
+      // 不建议设置 hostname 为 '0.0.0.0'，它将允许来自外部网络和来源的连接，请在知晓风险的情况下使用
+      hostname: '127.0.0.1',
     }
   });
 
@@ -37,14 +42,16 @@ module.exports = appInfo => {
     user: "root"
   };
 
-  exports.jwt = {
+  config.jwt = {
     // token加密密匙
     secret: "jwt123456"
   };
 
   // add your user config here
   const userConfig = {
-    // myAppName: 'egg',
+    code: {
+      LOGIN_SUCEESS: 6666,
+    }
   };
 
   return {

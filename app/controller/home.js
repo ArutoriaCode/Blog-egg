@@ -3,7 +3,8 @@
 const Success = require("../../exceptions/Success");
 const {
   ValidationCreatePost,
-  ValidationGetPosts
+  ValidationGetPosts,
+  ValidationGetDetail
 } = require("../validators/post");
 
 const Controller = require("egg").Controller;
@@ -15,13 +16,26 @@ class HomeController extends Controller {
     Success(result);
   }
 
+  async detail() {
+    const v = await new ValidationGetDetail().validate(this.ctx);
+    console.log("v --------------->", v);
+    const post = await this.ctx.service.post.findOne(v.get("path.id"));
+
+    Success({
+      data: post.dataValues
+    });
+  }
+
   async create() {
     const v = await new ValidationCreatePost().validate(this.ctx);
-    await this.ctx.service.post.create(v.data.body);
-    Success({
-      data: v.data.body,
-      msg: "创建成功！"
+    await this.ctx.service.post.create({
+      title: v.get("body.title"),
+      content: v.get("body.content"),
+      img: v.get("body.img"),
+      user_id: this.ctx.state.user.id
     });
+
+    Success("创建成功！");
   }
 }
 

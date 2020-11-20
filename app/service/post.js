@@ -25,11 +25,24 @@ class PostService extends Service {
     };
   }
 
+  async findOne(id) {
+    const post = await this.ctx.model.Post.findOne({
+      where: {
+        id
+      }
+    });
+
+    if (post === null) {
+      Fail('该文章不存在！');
+    }
+
+    return post;
+  }
+
   async create(post) {
     try {
       await this.ctx.model.Post.create(post);
     } catch (error) {
-      console.warn("PostService -> create -> error", error);
       Fail("创建文章失败！");
     }
   }

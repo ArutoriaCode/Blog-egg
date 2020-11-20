@@ -13,10 +13,6 @@ class ValidationCreatePost extends LinValidator {
     ];
     this.content = [new Rule("isLength", "文章内容不能为空", { min: 1 })];
   }
-
-  validatetitle() {
-    return typeof this.title !== "number";
-  }
 }
 
 class ValidationGetPosts extends LinValidator {
@@ -33,8 +29,18 @@ class ValidationGetPosts extends LinValidator {
     ];
   }
 }
+class ValidationGetDetail extends LinValidator {
+  constructor() {
+    super();
+
+    this.id = [
+      new Rule("isInt", "必须是整数")
+    ];
+  }
+}
 
 module.exports = {
   ValidationCreatePost,
-  ValidationGetPosts
+  ValidationGetPosts,
+  ValidationGetDetail
 };
