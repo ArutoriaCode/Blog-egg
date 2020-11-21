@@ -11,7 +11,7 @@ module.exports = {
 
     const { INTEGER, DATE, STRING } = Sequelize;
     await queryInterface.createTable(
-      "Posts",
+      "posts",
       {
         id: { type: INTEGER, primaryKey: true, autoIncrement: true },
         title: STRING(60),
