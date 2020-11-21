@@ -23,6 +23,7 @@ module.exports = app => {
       created_at: DATE
     },
     {
+      tableName: 'users',
       timestamps: true,
       createdAt: "created_at",
       updatedAt: false,
@@ -30,7 +31,7 @@ module.exports = app => {
         attributes: {
           exclude: ['password']
         }
-      }
+      },
     }
   );
 

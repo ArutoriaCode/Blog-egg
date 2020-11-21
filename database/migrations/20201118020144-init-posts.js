@@ -10,23 +10,31 @@ module.exports = {
      */
 
     const { INTEGER, DATE, STRING } = Sequelize;
-    await queryInterface.createTable("Posts", {
-      id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      title: STRING(60),
-      img: STRING(248),
-      content: STRING,
-      heart: {
-        type: INTEGER,
-        defaultValue: 0
+    await queryInterface.createTable(
+      "Posts",
+      {
+        id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+        title: STRING(60),
+        img: STRING(248),
+        content: STRING,
+        heart: {
+          type: INTEGER,
+          defaultValue: 0
+        },
+        user_id: {
+          // field 保存到表中的字段名
+          field: "user_id",
+          type: INTEGER
+        },
+        created_at: DATE,
+        updated_at: DATE
       },
-      user_id: {
-        // field 保存到表中的字段名
-        field: 'user_id',
-        type: INTEGER
-      },
-      created_at: DATE,
-      updated_at: DATE
-    });
+      {
+        tableName: "posts",
+        charset: "utf8",
+        collate: "utf8_general_ci"
+      }
+    );
   },
 
   down: async queryInterface => {

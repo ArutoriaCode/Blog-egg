@@ -23,9 +23,12 @@ module.exports = app => {
       updated_at: DATE
     },
     {
+      tableName: 'posts',
+      charset: "utf8",
+      collate: "utf8_general_ci",
       timestamps: true,
       createdAt: "created_at",
-      updatedAt: "updated_at"
+      updatedAt: "updated_at",
     }
   );
 

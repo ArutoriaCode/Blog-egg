@@ -10,18 +10,26 @@ module.exports = {
      */
 
     const { INTEGER, STRING, DATE } = Sequelize;
-    await queryInterface.createTable("users", {
-      id: {
-        type: INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+    await queryInterface.createTable(
+      "users",
+      {
+        id: {
+          type: INTEGER,
+          primaryKey: true,
+          autoIncrement: true
+        },
+        username: STRING(28),
+        avatar: STRING(128),
+        password: STRING(248),
+        email: STRING,
+        created_at: DATE
       },
-      username: STRING(28),
-      avatar: STRING(128),
-      password: STRING(248),
-      email: STRING,
-      created_at: DATE
-    });
+      {
+        tableName: "users",
+        charset: "utf8",
+        collate: "utf8_general_ci"
+      }
+    );
   },
 
   down: async queryInterface => {
