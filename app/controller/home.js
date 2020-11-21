@@ -18,7 +18,6 @@ class HomeController extends Controller {
 
   async detail() {
     const v = await new ValidationGetDetail().validate(this.ctx);
-    console.log("v --------------->", v);
     const post = await this.ctx.service.post.findOne(v.get("path.id"));
 
     Success({

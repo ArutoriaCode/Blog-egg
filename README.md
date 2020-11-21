@@ -4,6 +4,11 @@ About 仿照 https://www.yevpt.com/ 的一个博客的后端，基于egg.js
 
 前端仓库：https://github.com/Chenwangdexiwang/Blog
 
+## 部署
+https://eggjs.org/zh-cn/core/deployment.html
+
+部署前请注意修改`config/secure.js`中的安全配置
+
 ## QuickStart
 
 <!-- add docs here for user -->
