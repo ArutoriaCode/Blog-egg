@@ -2,6 +2,7 @@
 
 "use strict";
 const exception = require("./exception");
+const { sequelize, jwt } = require('./secure.js');
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -36,16 +37,8 @@ module.exports = appInfo => {
   // 注意一定要写驼峰 如：notfound_hanlder.js 这里需要写成notfoundHanlder
   config.middleware = ['notfoundHanlder'];
 
-  config.sequelize = {
-    password: "20082009",
-    database: "blog",
-    user: "root"
-  };
-
-  config.jwt = {
-    // token加密密匙
-    secret: "jwt123456"
-  };
+  config.sequelize = sequelize;
+  config.jwt = jwt;
 
   // add your user config here
   const userConfig = {
