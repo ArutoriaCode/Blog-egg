@@ -4,7 +4,7 @@ module.exports = app => {
   const { STRING, INTEGER, DATE } = app.Sequelize;
 
   const Post = app.model.define(
-    "Posts",
+    "posts",
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       title: STRING(60),
