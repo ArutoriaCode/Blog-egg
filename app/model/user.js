@@ -23,15 +23,17 @@ module.exports = app => {
       created_at: DATE
     },
     {
-      tableName: 'users',
+      tableName: "users",
+      charset: "utf8",
+      collate: "utf8_general_ci",
       timestamps: true,
       createdAt: "created_at",
       updatedAt: false,
       defaultScope: {
         attributes: {
-          exclude: ['password']
+          exclude: ["password"]
         }
-      },
+      }
     }
   );
 
@@ -54,8 +56,11 @@ module.exports = app => {
     return user;
   };
 
-  User.associate = function() {
-    app.model.User.hasMany(app.model.Post, { foreignKey: "user_id", targetKey: 'user_id' });
+  User.associate = function () {
+    app.model.User.hasMany(app.model.Post, {
+      foreignKey: "user_id",
+      targetKey: "user_id"
+    });
   };
 
   return User;
