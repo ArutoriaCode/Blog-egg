@@ -23,6 +23,7 @@ module.exports = app => {
       created_at: DATE
     },
     {
+      freezeTableName: true,
       tableName: "users",
       charset: "utf8",
       collate: "utf8_general_ci",
