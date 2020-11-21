@@ -25,7 +25,12 @@ module.exports = app => {
     {
       timestamps: true,
       createdAt: "created_at",
-      updatedAt: false
+      updatedAt: false,
+      defaultScope: {
+        attributes: {
+          exclude: ['password']
+        }
+      }
     }
   );
 
@@ -46,6 +51,10 @@ module.exports = app => {
     }
 
     return user;
+  };
+
+  User.associate = function() {
+    app.model.User.hasMany(app.model.Post, { foreignKey: "user_id", targetKey: 'user_id' });
   };
 
   return User;

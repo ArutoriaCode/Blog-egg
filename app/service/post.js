@@ -29,7 +29,8 @@ class PostService extends Service {
     const post = await this.ctx.model.Post.findOne({
       where: {
         id
-      }
+      },
+      include: this.ctx.model.User
     });
 
     if (post === null) {

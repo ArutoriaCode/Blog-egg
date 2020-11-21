@@ -19,7 +19,11 @@ module.exports = {
         type: INTEGER,
         defaultValue: 0
       },
-      user_id: INTEGER,
+      user_id: {
+        // field 保存到表中的字段名
+        field: 'user_id',
+        type: INTEGER
+      },
       created_at: DATE,
       updated_at: DATE
     });
