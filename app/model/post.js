@@ -20,7 +20,21 @@ module.exports = app => {
         type: INTEGER
       },
       created_at: DATE,
-      updated_at: DATE
+      updated_at: DATE,
+      commentNum: {
+        type: INTEGER,
+        defaultValue: 0,
+        field: 'commentNum'
+      },
+      readCount: {
+        type: INTEGER,
+        defaultValue: 0,
+        field: 'readCount'
+      },
+      shortContent: {
+        type: STRING(200),
+        field: "shortContent"
+      }
     },
     {
       freezeTableName: true,

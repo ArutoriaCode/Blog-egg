@@ -33,7 +33,8 @@
   },
   "scripts": {
     "dev": "npx sequelize db:migrate && egg-bin dev",
-    "migrateDB": "npx sequelize db:migrate",
+    "migrate": "npx sequelize db:migrate",
+    "migrate:undo": "npx sequelize db:migrate:undo",
     "start": "egg-scripts start --daemon --title=egg-server-blog-egg",
     "stop": "egg-scripts stop --title=egg-server-blog-egg",
     "debug": "egg-bin debug",
