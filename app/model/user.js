@@ -34,16 +34,20 @@ module.exports = app => {
         attributes: {
           exclude: ["password"]
         }
+      },
+      scopes: {
+        comparePassword: {}
       }
     }
   );
 
   User.verifyEmailPassword = async function (email, password) {
-    const user = await app.model.User.findOne({
+    const user = await app.model.User.scope("comparePassword").findOne({
       where: {
         email
       }
     });
+    console.log("🚀 ~ file: user.js ~ line 52 ~ user ~ user", user);
 
     if (!user) {
       Fail("用户不存在或账号密码错误");
@@ -54,7 +58,11 @@ module.exports = app => {
       Fail("用户不存在或账号密码错误");
     }
 
-    return user;
+    return {
+      email: user.email,
+      username: user.username,
+      id: user.id
+    };
   };
 
   User.associate = function () {

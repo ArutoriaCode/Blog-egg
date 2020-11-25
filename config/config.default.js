@@ -2,7 +2,7 @@
 
 "use strict";
 const exception = require("./exception");
-const { sequelize, jwt } = require('./secure.js');
+const { sequelize, jwt } = require("./secure.js");
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -15,7 +15,7 @@ module.exports = appInfo => {
     onerror: {
       all: exception,
       accepts() {
-        return 'json';
+        return "json";
       }
     },
     security: {
@@ -24,12 +24,12 @@ module.exports = appInfo => {
       }
     },
     i18n: {
-      defaultLocale: 'zh-CN'
+      defaultLocale: "zh-CN"
     },
     listen: {
       port: 7001,
       // 不建议设置 hostname 为 '0.0.0.0'，它将允许来自外部网络和来源的连接，请在知晓风险的情况下使用
-      hostname: '127.0.0.1',
+      hostname: "127.0.0.1"
     }
   });
 
@@ -38,18 +38,13 @@ module.exports = appInfo => {
 
   // add your middleware config here
   // 注意一定要写驼峰 如：notfound_hanlder.js 这里需要写成notfoundHanlder
-  config.middleware = ['notfoundHanlder'];
+  config.middleware = ["notfoundHanlder"];
 
   config.sequelize = sequelize;
   config.jwt = jwt;
 
   // add your user config here
-  const userConfig = {
-    code: {
-      LOGIN_SUCEESS: 6000,
-      EXIST_USER: 6001
-    }
-  };
+  const userConfig = {};
 
   return {
     ...config,
