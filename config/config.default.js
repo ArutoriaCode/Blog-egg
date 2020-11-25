@@ -13,7 +13,10 @@ module.exports = appInfo => {
    **/
   const config = (exports = {
     onerror: {
-      all: exception
+      all: exception,
+      accepts() {
+        return 'json';
+      }
     },
     security: {
       csrf: {
@@ -43,7 +46,8 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     code: {
-      LOGIN_SUCEESS: 6666,
+      LOGIN_SUCEESS: 6000,
+      EXIST_USER: 6001
     }
   };
 

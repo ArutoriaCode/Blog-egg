@@ -44,7 +44,7 @@ module.exports = (err, ctx) => {
   }
 
   try {
-    ctx.body = JSON.stringify(body);
+    ctx.body = body;
   } catch (error) {
     ctx.body = {
       msg: "服务器错误",

@@ -17,23 +17,27 @@ class ValidationCreateUser extends LinValidator {
     ];
   }
 
-  async validateEmail(params, model) {
-    const email = params.body.email;
-    let isExistUser = null;
-    try {
-      isExistUser = await model.User.findOne({
-        where: {
-          email
-        }
-      });
-    } catch (err) {
-      console.error("Error:", err);
-    }
+  /** 校验邮箱账号是否已存在
+   * 这里不再使用的原因是每次请求都会查询一次数据库且无论email参数是否正确
+   * 且无法准确的描述用户已存在（抛出的错误都会归类为参数错误，无法设置状态码）
+   */
+  // async validateEmail(params, model) {
+  //   const email = params.body.email;
+  //   let isExistUser = null;
+  //   try {
+  //     isExistUser = await model.User.findOne({
+  //       where: {
+  //         email
+  //       }
+  //     });
+  //   } catch (err) {
+  //     console.error("Error:", err);
+  //   }
 
-    if (isExistUser) {
-      throw Error("该用户已存在！");
-    }
-  }
+  //   if (isExistUser) {
+  //     throw Error("该用户已存在！");
+  //   }
+  // }
 }
 
 class ValidationGetToken extends LinValidator {
