@@ -1,6 +1,7 @@
 "use strict";
 
-const { LOGIN_SUCEESS, REGISTER_SUCCESS } = require("../../config/codes");
+const { LOGIN_SUCEESS, REGISTER_SUCCESS, INVALID_TOKEN } = require("../../config/codes");
+const Fail = require("../../exceptions/Fail");
 const Success = require("../../exceptions/Success");
 const {
   ValidationCreateUser,
@@ -27,7 +28,6 @@ class UserController extends Controller {
 
     const refresh_token = this.app.jwt.sign(
       {
-        email: user.email,
         id: user.id,
         name: "refresh_token",
         createTime: new Date().getTime()
@@ -52,8 +52,10 @@ class UserController extends Controller {
     // 注册成功后直接返回token
     Success({
       data: {
-        ...user,
-        ...token
+        token,
+        user: {
+          ...user
+        },
       },
       msg: "注册成功！",
       code: REGISTER_SUCCESS
@@ -70,10 +72,43 @@ class UserController extends Controller {
     const token = await this.sgin(user);
     Success({
       data: {
-        ...user,
-        ...token
+        token,
+        user: {
+          ...user
+        },
       },
       code: LOGIN_SUCEESS
+    });
+  }
+
+  async refresh() {
+    const token = this.ctx.body.token;
+    if (!token) {
+      Fail({
+        msg: "无效的token"
+      });
+    }
+    let decoded = null;
+    try {
+      decoded = this.app.jwt.verify(token, this.app.config.jwt.secret);
+      console.log("UserController ~ refresh ~ decoded", decoded);
+    } catch (error) {
+      throw error;
+    }
+
+    if (decoded.name !== 'refresh_token' || !decoded.id) {
+      Fail('无效的刷新令牌');
+    }
+
+    const user = await this.ctx.service.user.get(decoded.id);
+    const newToken = await this.sgin(user);
+    Success({
+      data: {
+        user: {
+          ...user
+        },
+        token: newToken
+      }
     });
   }
 }

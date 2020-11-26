@@ -1,6 +1,6 @@
 "use strict";
 const { Service } = require("egg");
-const { EXIST_USER } = require("../../config/codes");
+const { EXIST_USER, INVALID_TOKEN } = require("../../config/codes");
 const Fail = require("../../exceptions/Fail");
 
 class UserService extends Service {
@@ -24,6 +24,20 @@ class UserService extends Service {
       console.warn("UserService -> create -> error", error);
       Fail("注册失败，未知原因");
     }
+  }
+
+  async get(id) {
+    const user = await this.ctx.model.User.findOne({
+      where: {
+        id
+      }
+    });
+
+    if (!user) {
+      Fail('无效的刷新令牌');
+    }
+
+    return user;
   }
 }
 

@@ -1,44 +1,19 @@
 "use strict";
-
-const HttpException = require("../exceptions/HttpException");
-const UnauthorizedError = require("koa-jwt2/lib/errors/UnauthorizedError");
-
-function HttpExceptionHandler(err) {
-  const body = {
-    msg: err.msg,
-    code: err.code
-  };
-
-  if (err.data) {
-    body.data = err.data;
-  }
-
-  if (err.attributes instanceof Object) {
-    Object.assign(body, err.attributes);
-  }
-
-  return body;
-}
+const ExceptionHandlers = require("../exceptions/ExceptionHandlers.js");
+const { SERVER_ERROR } = require("./codes");
 
 module.exports = (err, ctx) => {
-  console.warn("\n[Error]\t", err);
   ctx.set("Content-Type", "application/json");
   const path = `${ctx.request.method} ${ctx.request.url}`;
 
   let body = {};
-  if (err instanceof HttpException) {
-    body = HttpExceptionHandler(err);
+  if (ExceptionHandlers[err.name]) {
+    body = ExceptionHandlers[err.name](err);
     body.request = path;
-  } else if (err instanceof UnauthorizedError) {
-    body = {
-      msg: "token无效或未授权",
-      code: 1401,
-      request: path
-    };
   } else {
     body = {
       msg: "服务器错误",
-      code: 1500,
+      code: SERVER_ERROR,
       request: path
     };
   }
@@ -48,7 +23,7 @@ module.exports = (err, ctx) => {
   } catch (error) {
     ctx.body = {
       msg: "服务器错误",
-      code: 1500,
+      code: SERVER_ERROR,
       request: path
     };
   }

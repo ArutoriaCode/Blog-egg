@@ -17,6 +17,7 @@ class HttpException extends Error {
     this.status = status || 500;
     this.data = data || {};
     this.attributes = attributes;
+    this.name = 'HttpException';
   }
 }
 
