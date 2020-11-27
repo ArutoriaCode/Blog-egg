@@ -1,5 +1,6 @@
 "use strict";
 const bcrypt = require("bcryptjs");
+const { NOT_EXIST_USER_OR_PASSWORD_ERROR } = require("../../config/codes");
 const Fail = require("../../exceptions/Fail");
 
 module.exports = app => {
@@ -50,12 +51,18 @@ module.exports = app => {
     console.log("🚀 ~ file: user.js ~ line 52 ~ user ~ user", user);
 
     if (!user) {
-      Fail("用户不存在或账号密码错误");
+      Fail({
+        msg: "用户不存在或账号密码错误",
+        code: NOT_EXIST_USER_OR_PASSWORD_ERROR
+      });
     }
 
     const correct = bcrypt.compareSync(password, user.password);
     if (!correct) {
-      Fail("用户不存在或账号密码错误");
+      Fail({
+        msg: "用户不存在或账号密码错误",
+        code: NOT_EXIST_USER_OR_PASSWORD_ERROR
+      });
     }
 
     return {

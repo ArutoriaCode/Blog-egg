@@ -84,9 +84,7 @@ class UserController extends Controller {
   async refresh() {
     const token = this.ctx.body.token;
     if (!token) {
-      Fail({
-        msg: "无效的token"
-      });
+      Fail("无效的token");
     }
     let decoded = null;
     try {
