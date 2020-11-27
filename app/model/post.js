@@ -10,9 +10,10 @@ module.exports = app => {
       title: STRING(60),
       img: STRING(248),
       content: STRING,
-      heart: {
+      likeNum: {
         type: INTEGER,
-        defaultValue: 0
+        defaultValue: 0,
+        field: "likeNum"
       },
       user_id: {
         // field 保存到表中的字段名
@@ -43,7 +44,7 @@ module.exports = app => {
       collate: "utf8_general_ci",
       timestamps: true,
       createdAt: "created_at",
-      updatedAt: "updated_at",
+      updatedAt: "updated_at"
     }
   );
 

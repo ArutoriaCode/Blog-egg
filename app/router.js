@@ -12,4 +12,7 @@ module.exports = app => {
   v1.post("/posts/create", app.jwt, controller.home.create);
   v1.post("/user/register", controller.user.create);
   v1.post("/user/token", controller.user.token);
+  v1.post('/like', app.jwt, controller.like.index);
+  v1.get('/like/all', app.jwt, controller.like.all);
+  v1.post('/like/cancel', app.jwt, controller.like.cancel);
 };

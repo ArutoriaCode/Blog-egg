@@ -1,6 +1,6 @@
 "use strict";
 const { Service } = require("egg");
-const { EXIST_USER, INVALID_TOKEN } = require("../../config/codes");
+const { EXIST_USER } = require("../../config/codes");
 const Fail = require("../../exceptions/Fail");
 
 class UserService extends Service {

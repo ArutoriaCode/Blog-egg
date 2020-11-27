@@ -6,13 +6,13 @@ const Fail = require("../../exceptions/Fail");
 class PostService extends Service {
   async get() {
     const ctx = this.ctx;
-    const offset = toSafeInteger(ctx.query.cuurent) || 0
-    const limit = toSafeInteger(ctx.query.pageSize) || 8
+    const offset = toSafeInteger(ctx.query.cuurent) || 0;
+    const limit = toSafeInteger(ctx.query.pageSize) || 8;
     const query = {
       offset,
       limit,
       attributes: {
-        exclude: ['content']
+        exclude: ["content"]
       }
     };
 
@@ -34,7 +34,7 @@ class PostService extends Service {
     });
 
     if (post === null) {
-      Fail('该文章不存在！');
+      Fail("该文章不存在！");
     }
 
     return post;
