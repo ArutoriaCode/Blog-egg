@@ -1,9 +1,9 @@
 "use strict";
 
 const Success = require("../../exceptions/Success");
+const ValidationPagination = require("../validators/pagination");
 const {
   ValidationCreatePost,
-  ValidationGetPosts,
   ValidationGetDetail
 } = require("../validators/post");
 
@@ -11,7 +11,7 @@ const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
   async posts() {
-    await new ValidationGetPosts().validate(this.ctx);
+    await new ValidationPagination().validate(this.ctx);
     const result = await this.ctx.service.post.get();
     Success(result);
   }

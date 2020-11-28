@@ -34,7 +34,7 @@ class UserService extends Service {
     });
 
     if (!user) {
-      Fail('无效的刷新令牌');
+      Fail('该用户不存在');
     }
 
     return user;

@@ -48,7 +48,6 @@ module.exports = app => {
         email
       }
     });
-    console.log("🚀 ~ file: user.js ~ line 52 ~ user ~ user", user);
 
     if (!user) {
       Fail({

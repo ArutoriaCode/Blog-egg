@@ -7,25 +7,31 @@ module.exports = app => {
     "comments",
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      avatar: STRING(120),
+      // 评论内容
       content: STRING(360),
       created_at: DATE,
       updated_at: DATE,
       // 评论所属类型，与ownerId一起使用，根据该条件去查询某表
       type: INTEGER,
+      // 来自哪个用户id
       fromId: { type: INTEGER, field: "fromId" },
+      // 来自哪个用户昵称
       fromName: { type: STRING, field: "fromName" },
-      commentReplayNum: INTEGER,
-      // 本条评论所属哪个类型Id,类型是指文章、留言又或者其他评论id
-      ownerId: {
+      commentReplayNum: {
         type: INTEGER,
-        field: "ownerId"
+        defaultValue: 0,
+        field: 'commentReplayNum'
       },
+      // 本条评论所属哪个类型Id，类型是指文章、或其他评论的id，如果为空，那么代表是在留言板页面进行的评论
+      ownerId: { type: INTEGER, field: 'ownerId', allowNull: true },
       // like表新增时递增该字段
       likeNum: {
         type: INTEGER,
         field: "likeNum"
-      }
+      },
+      commentId: { type: INTEGER, field: 'commentId', allowNull: true },
+      toId: { type: INTEGER, field: 'toId', allowNull: true },
+      toName: { type: STRING, field: 'toName', allowNull: true }
     },
     {
       freezeTableName: true,

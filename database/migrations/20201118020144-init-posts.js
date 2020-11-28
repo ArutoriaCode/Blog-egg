@@ -17,14 +17,29 @@ module.exports = {
         title: STRING(60),
         img: STRING(248),
         content: STRING,
-        heart: {
-          type: INTEGER,
-          defaultValue: 0
+        likeNum: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+          field: "likeNum"
         },
         user_id: {
           // field 保存到表中的字段名
           field: "user_id",
           type: INTEGER
+        },
+        readCount: {
+          field: 'readCount',
+          type: INTEGER,
+          defaultValue: 0
+        },
+        commentNum: {
+          field: 'commentNum',
+          type: INTEGER,
+          defaultValue: 0
+        },
+        shortContent: {
+          type: STRING(300),
+          field: 'shortContent',
         },
         created_at: DATE,
         updated_at: DATE

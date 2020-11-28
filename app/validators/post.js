@@ -15,20 +15,6 @@ class ValidationCreatePost extends LinValidator {
   }
 }
 
-class ValidationGetPosts extends LinValidator {
-  constructor() {
-    super();
-
-    this.pageSize = [
-      new Rule("isOptional"),
-      new Rule("isInt", "必须是整数")
-    ];
-    this.current = [
-      new Rule("isOptional"),
-      new Rule("isInt", "必须是整数")
-    ];
-  }
-}
 class ValidationGetDetail extends LinValidator {
   constructor() {
     super();
@@ -41,6 +27,5 @@ class ValidationGetDetail extends LinValidator {
 
 module.exports = {
   ValidationCreatePost,
-  ValidationGetPosts,
   ValidationGetDetail
 };

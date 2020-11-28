@@ -1,6 +1,6 @@
 "use strict";
 
-const { LOGIN_SUCEESS, REGISTER_SUCCESS, INVALID_TOKEN } = require("../../config/codes");
+const { LOGIN_SUCEESS, REGISTER_SUCCESS } = require("../../config/codes");
 const Fail = require("../../exceptions/Fail");
 const Success = require("../../exceptions/Success");
 const {
@@ -23,6 +23,7 @@ class UserController extends Controller {
       this.app.config.jwt.secret,
       {
         expiresIn: "2h"
+        // expiresIn: "10000" // 测试双令牌刷新 10秒后token过期
       }
     );
 
@@ -54,7 +55,9 @@ class UserController extends Controller {
       data: {
         token,
         user: {
-          ...user
+          email: user.email,
+          username: user.username,
+          id: user.id
         },
       },
       msg: "注册成功！",
@@ -73,23 +76,20 @@ class UserController extends Controller {
     Success({
       data: {
         token,
-        user: {
-          ...user
-        },
+        user,
       },
       code: LOGIN_SUCEESS
     });
   }
 
   async refresh() {
-    const token = this.ctx.body.token;
+    const token = this.ctx.request.body.token;
     if (!token) {
       Fail("无效的token");
     }
     let decoded = null;
     try {
       decoded = this.app.jwt.verify(token, this.app.config.jwt.secret);
-      console.log("UserController ~ refresh ~ decoded", decoded);
     } catch (error) {
       throw error;
     }
@@ -103,7 +103,9 @@ class UserController extends Controller {
     Success({
       data: {
         user: {
-          ...user
+          email: user.email,
+          username: user.username,
+          id: user.id
         },
         token: newToken
       }

@@ -12,6 +12,7 @@ const {
   REVOKED_TOKEN,
   EXPIRED_TOKEN
 } = require("../config/codes.js");
+const { isEmpty } = require("lodash");
 
 function HttpExceptionHandler(err) {
   const body = {
@@ -19,11 +20,11 @@ function HttpExceptionHandler(err) {
     code: err.code
   };
 
-  if (err.data) {
+  if (!isEmpty(err.data)) {
     body.data = err.data;
   }
 
-  if (err.attributes instanceof Object) {
+  if (err.attributes instanceof Object && !isEmpty(err.attributes)) {
     Object.assign(body, err.attributes);
   }
 
