@@ -14,11 +14,11 @@ class LikeService extends Service {
   }
 
   async _isLiked(id, type) {
-    return await this.app.model.findOne({
+    return await this.app.model.Like.findOne({
       where: {
-        id,
+        ownerId: id,
         type,
-        uid: this.ctx.stale.user.id
+        uid: this.ctx.state.user.id
       }
     });
   }
@@ -36,9 +36,9 @@ class LikeService extends Service {
   }
 
   async like({ id, type, uid }) {
-    const isLiked = await this._isLiked();
+    const isLiked = await this._isLiked(id, type);
     if (isLiked) {
-      Fail.error('你已点过赞');
+      Fail('你已点过赞了！');
     }
 
     const model = await this._findByType(type, {
@@ -72,15 +72,14 @@ class LikeService extends Service {
   }
 
   async cancel({ id, type, uid }) {
-    const isLiked = await this._isLiked();
+    const isLiked = await this._isLiked(id, type);
     if (!isLiked) {
       Fail('取消点赞失败！');
     }
 
     const model = await this._findByType(type, {
       where: {
-        ownerId: id,
-        uid
+        id
       }
     });
 
@@ -92,9 +91,11 @@ class LikeService extends Service {
     return this.app.model.transaction(async t => {
       await this.app.model.Like.destroy(
         {
-          ownerId: id,
-          type,
-          uid
+          where: {
+            ownerId: id,
+            type,
+            uid
+          }
         },
         {
           transaction: t
