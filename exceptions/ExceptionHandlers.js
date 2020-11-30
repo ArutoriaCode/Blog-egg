@@ -20,7 +20,7 @@ function HttpExceptionHandler(err) {
     code: err.code
   };
 
-  if (!isEmpty(err.data)) {
+  if (err.data !== null) {
     body.data = err.data;
   }
 

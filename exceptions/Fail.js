@@ -10,6 +10,6 @@ module.exports = function({ msg, data, code }) {
     msg: msg || "失败",
     code: code || 333,
     status: 200,
-    data
+    data: data || null
   });
 };

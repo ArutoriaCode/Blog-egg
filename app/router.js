@@ -18,4 +18,7 @@ module.exports = app => {
   v1.post('/like/cancel', app.jwt, controller.like.cancel);
   v1.post('/comment/create', app.jwt, controller.comment.create);
   v1.get('/guestbook', controller.comment.guestbook);
+
+  // 服务于Editor.js的link插件
+  v1.get('/endpoint', controller.link.index);
 };

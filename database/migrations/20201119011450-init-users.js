@@ -22,6 +22,10 @@ module.exports = {
         avatar: STRING(128),
         password: STRING(248),
         email: STRING,
+        level: {
+          type: INTEGER,
+          defaultValue: 1
+        },
         created_at: DATE
       },
       {

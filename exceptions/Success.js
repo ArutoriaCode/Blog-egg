@@ -9,7 +9,7 @@ module.exports = function ({ msg, data, code, attributes = {} }) {
     msg: msg || "成功",
     code: code || 666,
     status: 200,
-    data,
+    data: data || null,
     attributes
   });
 };

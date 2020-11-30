@@ -21,6 +21,10 @@ module.exports = app => {
         }
       },
       email: STRING,
+      level: {
+        type: INTEGER,
+        defaultValue: 1
+      },
       created_at: DATE
     },
     {

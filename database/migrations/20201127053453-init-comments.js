@@ -7,6 +7,7 @@ module.exports = {
       "comments",
       {
         id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+        avatar: STRING(360),
         content: STRING(360),
         created_at: DATE,
         updated_at: DATE,

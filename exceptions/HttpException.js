@@ -15,7 +15,7 @@ class HttpException extends Error {
     this.msg = msg || '服务器异常';
     this.code = code;
     this.status = status || 500;
-    this.data = data || {};
+    this.data = data || null;
     this.attributes = attributes;
     this.name = 'HttpException';
   }

@@ -7,6 +7,8 @@ module.exports = app => {
     "comments",
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+      // 评论人的头像
+      avatar: STRING(360),
       // 评论内容
       content: STRING(360),
       created_at: DATE,
