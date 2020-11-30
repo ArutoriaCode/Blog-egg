@@ -20,6 +20,9 @@ class CommentService extends Service {
     const offset = toSafeInteger(ctx.query.cuurent) || 0;
     const limit = toSafeInteger(ctx.query.pageSize) || 8;
     const query = {
+      order: [
+        ['created_at', 'DESC']
+      ],
       offset,
       limit,
       where: {
