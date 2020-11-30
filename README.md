@@ -1,13 +1,15 @@
 # blog-egg
 
-About 仿照 https://www.yevpt.com/ 的一个博客的后端，基于egg.js
+个人博客后端，基于egg.js框架开发
 
 前端仓库：https://github.com/Chenwangdexiwang/Blog
 
-## 部署
+## 部署参考
 https://eggjs.org/zh-cn/core/deployment.html
 
-部署前请注意修改`config/secure.js`中的安全配置
+运行或部署前的注意事项：
+1. 请修改`config/secure.js`中的安全配置
+2. 请修改`database/config.json`中的配置，以便在运行时创建相关表
 
 ## QuickStart
 
