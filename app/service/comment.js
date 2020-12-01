@@ -15,6 +15,18 @@ class CommentService extends Service {
     return comment;
   }
 
+  async findReplyByCommentId(commentId) {
+    return await this.ctx.model.Comment.findAll({
+      order: [
+        ['created_at', 'DESC']
+      ],
+      where: {
+        commentId,
+        type: COMMENT_TYPE.COMMENT
+      }
+    });
+  }
+
   async findAllByGuestBook() {
     const ctx = this.ctx;
     const offset = toSafeInteger(ctx.query.cuurent) || 0;

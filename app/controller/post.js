@@ -9,7 +9,7 @@ const {
 
 const Controller = require("egg").Controller;
 
-class HomeController extends Controller {
+class PostController extends Controller {
   async posts() {
     await new ValidationPagination().validate(this.ctx);
     const result = await this.ctx.service.post.get();
@@ -38,4 +38,4 @@ class HomeController extends Controller {
   }
 }
 
-module.exports = HomeController;
+module.exports = PostController;

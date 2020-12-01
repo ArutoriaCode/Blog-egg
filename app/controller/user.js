@@ -85,13 +85,13 @@ class UserController extends Controller {
   async refresh() {
     const token = this.ctx.request.body.token;
     if (!token) {
-      Fail("无效的token");
+      Fail("token: 请传递刷新令牌");
     }
     let decoded = null;
     try {
       decoded = this.app.jwt.verify(token, this.app.config.jwt.secret);
     } catch (error) {
-      throw error;
+      Fail('无效的刷新令牌');
     }
 
     if (decoded.name !== 'refresh_token' || !decoded.id) {
