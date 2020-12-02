@@ -12,6 +12,9 @@ exports.jwt = {
 
 exports.tencentCos = {
   // 腾讯云cos密匙，请自行购买或使用别的方式存储文件
+  SecretId: 'xxx',
+  SecretKey: 'xxx',
+  Bucket: 'xxx',
   Region: 'ap-guangzhou',
   avatarPath: 'avatar/',
   CDN: 'https://arutoria-1256549464.file.myqcloud.com/'
