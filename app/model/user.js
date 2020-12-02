@@ -71,7 +71,9 @@ module.exports = app => {
     return {
       email: user.email,
       username: user.username,
-      id: user.id
+      id: user.id,
+      avatar: user.avatar,
+      level: user.level
     };
   };
 

@@ -57,7 +57,9 @@ class UserController extends Controller {
         user: {
           email: user.email,
           username: user.username,
-          id: user.id
+          id: user.id,
+          avatar: user.avatar,
+          level: user.level
         },
       },
       msg: "注册成功！",
@@ -105,7 +107,9 @@ class UserController extends Controller {
         user: {
           email: user.email,
           username: user.username,
-          id: user.id
+          id: user.id,
+          avatar: user.avatar,
+          level: user.level
         },
         token: newToken
       }

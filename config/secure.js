@@ -12,6 +12,6 @@ exports.jwt = {
 
 exports.tencentCos = {
   // 腾讯云cos密匙，请自行购买或使用别的方式存储文件
-  SecretId: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  SecretKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  SecretId: 'SecretId',
+  SecretKey: 'SecretId',
 };
