@@ -1,6 +1,6 @@
 "use strict";
 
-const { LinValidator, Rule } = require("../../validator/lin-validator");
+const { LinValidator, Rule } = require("../../utils/lin-validator");
 
 class ValidationPagination extends LinValidator {
   constructor() {

@@ -1,6 +1,6 @@
 "use strict";
 const { COMMENT_TYPE } = require("../../config/keys");
-const { LinValidator, Rule } = require("../../validator/lin-validator");
+const { LinValidator, Rule } = require("../../utils/lin-validator");
 
 class ValidationCreateComment extends LinValidator {
   constructor() {

@@ -16,7 +16,7 @@ class LinValidator {
     this.parsed = {};
   }
 
-  _assembleAllParams(ctx) {
+  async _assembleAllParams(ctx) {
     return {
       body: ctx.request.body,
       query: ctx.request.query,
@@ -57,7 +57,7 @@ class LinValidator {
 
   async validate(ctx, alias = {}) {
     this.alias = alias;
-    const params = this._assembleAllParams(ctx);
+    const params = await this._assembleAllParams(ctx);
     this.model = ctx.model;
     this.data = cloneDeep(params);
     this.parsed = cloneDeep(params);

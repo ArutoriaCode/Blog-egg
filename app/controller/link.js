@@ -2,7 +2,7 @@
 const Fail = require("../../exceptions/Fail");
 const domino = require("domino");
 const { Controller } = require("egg");
-const { validator } = require("../../validator/util");
+const { validator } = require("../../utils/util");
 const { getMetadata } = require("page-metadata-parser");
 
 class LinkController extends Controller {
