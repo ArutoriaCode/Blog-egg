@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cos-nodejs-sdk-v5": "^2.8.3",
     "domino": "^2.1.6",
     "egg": "^2.15.1",
     "egg-jwt": "^3.1.7",
@@ -18,6 +19,7 @@
     "lodash": "^4.17.20",
     "mysql2": "^2.2.5",
     "page-metadata-parser": "^1.1.4",
+    "stream-wormhole": "^1.1.0",
     "validator": "^13.1.17"
   },
   "devDependencies": {
