@@ -10,7 +10,22 @@ class UploadController extends Controller {
       Fail("请上传图片！");
     }
 
-    const url = await this.ctx.service.upload.uploadFile(file, this.config.tencentCos.avatarPath);
+    const url = await this.ctx.service.upload.uploadFile(file);
+    Success({
+      data: {
+        url,
+        filename: file.filename
+      }
+    });
+  }
+
+  async avatar() {
+    const file = await this.ctx.getFileStream();
+    if (!file) {
+      Fail("请上传图片！");
+    }
+
+    const url = await this.ctx.service.upload.uploadFile(file, this.app.config.tencentCos.avatarPath);
     Success({
       data: {
         url,

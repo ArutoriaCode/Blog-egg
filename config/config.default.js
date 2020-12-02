@@ -12,6 +12,9 @@ module.exports = appInfo => {
    * @type {Egg.EggAppConfig}
    **/
   const config = (exports = {
+    bodyParser: {
+      formLimit: '5mb'
+    },
     onerror: {
       all: exception,
       accepts() {

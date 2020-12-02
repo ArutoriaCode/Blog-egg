@@ -13,11 +13,17 @@ class UserService extends Service {
 
     if (isExistUser) {
       Fail({
-        msg: '注册失败，用户已存在！',
+        msg: "注册失败，用户已存在！",
         code: EXIST_USER
       });
     }
 
+    const url = await this.ctx.service.upload.uploadFile(
+      user.avatar,
+      this.config.tencentCos.avatarPath
+    );
+
+    user = { ...user, avatar: url };
     try {
       return await this.ctx.model.User.create(user);
     } catch (error) {
@@ -34,7 +40,7 @@ class UserService extends Service {
     });
 
     if (!user) {
-      Fail('该用户不存在');
+      Fail("该用户不存在");
     }
 
     return user;

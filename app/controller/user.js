@@ -47,7 +47,10 @@ class UserController extends Controller {
 
   async create() {
     const v = await new ValidationCreateUser().validate(this.ctx);
-    const user = await this.ctx.service.user.create(v.data.body);
+    const user = await this.ctx.service.user.create({
+      ...v.data.body,
+      avatar: this.ctx.request.files[0]
+    });
 
     const token = await this.sgin(user);
     // 注册成功后直接返回token
