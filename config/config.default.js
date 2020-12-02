@@ -2,7 +2,7 @@
 
 "use strict";
 const exception = require("./exception");
-const { sequelize, jwt } = require("./secure.js");
+const { sequelize, jwt, tencentCos, multipart } = require("./secure.js");
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -42,9 +42,12 @@ module.exports = appInfo => {
 
   config.sequelize = sequelize;
   config.jwt = jwt;
+  config.multipart = multipart;
 
   // add your user config here
-  const userConfig = {};
+  const userConfig = {
+    tencentCos
+  };
 
   return {
     ...config,
