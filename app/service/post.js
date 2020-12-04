@@ -40,12 +40,38 @@ class PostService extends Service {
     return post;
   }
 
-  async create(post) {
+  async create({ file, title, content }) {
+    const url = await this.ctx.service.upload.uploadFile(
+      file,
+      this.config.tencentCos.postsPath
+    );
+
     try {
-      await this.ctx.model.Post.create(post);
+      const shortContent = this._sliceContent(content);
+      await this.ctx.model.Post.create({
+        img: url,
+        title,
+        content,
+        shortContent,
+        user_id: this.ctx.state.user.id
+      });
     } catch (error) {
+      console.log("Post CreateError", error);
       Fail("创建文章失败！");
     }
+  }
+
+  _sliceContent(content) {
+    if (typeof content === 'string') {
+      content = JSON.parse(content);
+    }
+
+    const paragraph = content.blocks.find(b => b.type === "paragraph");
+    const text = paragraph.data.text;
+    if (text.length > 1) {
+      return text.slice(0, 198);
+    }
+    return "";
   }
 }
 

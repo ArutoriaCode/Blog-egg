@@ -30,5 +30,7 @@ module.exports = {
   /** 请求头令牌方案的格式不正确 */
   CREDENTAILS_BAD_FORMAT: 7301,
   /** 请求头没有携带令牌信息 */
-  CREDENTIALS_REQUIRED_TOKEN: 7302
+  CREDENTIALS_REQUIRED_TOKEN: 7302,
+  /** 权限等级不足 */
+  INSUFFICIENT_PRIVILEGE_LEVEL: 7404
 };
