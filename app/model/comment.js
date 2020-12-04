@@ -1,7 +1,7 @@
 "use strict";
 
 const dayjs = require("dayjs");
-
+const { Op } = require('sequelize')
 module.exports = app => {
   const { STRING, INTEGER, DATE } = app.Sequelize;
 
@@ -47,7 +47,8 @@ module.exports = app => {
       },
       commentId: { type: INTEGER, field: "commentId", allowNull: true },
       toId: { type: INTEGER, field: "toId", allowNull: true },
-      toName: { type: STRING, field: "toName", allowNull: true }
+      toName: { type: STRING, field: "toName", allowNull: true },
+      status: { type: INTEGER, field: 'status', defaultValue: 0 },
     },
     {
       freezeTableName: true,
@@ -56,7 +57,14 @@ module.exports = app => {
       collate: "utf8_general_ci",
       timestamps: true,
       createdAt: "created_at",
-      updatedAt: "updated_at"
+      updatedAt: "updated_at",
+      defaultScope: {
+        where: {
+          status: {
+            [Op.ne]: 0
+          }
+        }
+      }
     }
   );
 

@@ -27,7 +27,8 @@ module.exports = {
         },
         commentId: { type: INTEGER, field: 'commentId', allowNull: true },
         toId: { type: INTEGER, field: "toId", allowNull: true },
-        toName: { type: STRING, field: "toName", allowNull: true }
+        toName: { type: STRING, field: "toName", allowNull: true },
+        status: { type: INTEGER, field: 'status', defaultValue: 0 }
       },
       {
         tableName: "comments",
