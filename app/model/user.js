@@ -1,5 +1,6 @@
 "use strict";
 const bcrypt = require("bcryptjs");
+const dayjs = require("dayjs");
 const { NOT_EXIST_USER_OR_PASSWORD_ERROR } = require("../../config/codes");
 const Fail = require("../../exceptions/Fail");
 
@@ -25,7 +26,13 @@ module.exports = app => {
         type: INTEGER,
         defaultValue: 1
       },
-      created_at: DATE
+      created_at: {
+        type: DATE,
+        get() {
+          const time = this.getDataValue("created_at");
+          return dayjs(time).format("YYYY-MM-DD HH:mm:ss");
+        }
+      }
     },
     {
       freezeTableName: true,

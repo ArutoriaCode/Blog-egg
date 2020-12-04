@@ -9,14 +9,14 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
 
-    const { INTEGER, DATE, STRING } = Sequelize;
+    const { INTEGER, DATE, STRING, TEXT } = Sequelize;
     await queryInterface.createTable(
       "posts",
       {
         id: { type: INTEGER, primaryKey: true, autoIncrement: true },
         title: STRING(60),
         img: STRING(248),
-        content: STRING,
+        content: TEXT('long'),
         likeNum: {
           type: Sequelize.INTEGER,
           defaultValue: 0,
