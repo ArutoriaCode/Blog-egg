@@ -17,6 +17,7 @@ exports.tencentCos = {
   Bucket: 'xxx',
   Region: 'ap-guangzhou',
   avatarPath: 'avatar/',
+  postsPath: 'posts/',
   CDN: 'https://arutoria-1256549464.file.myqcloud.com/'
 };
 
