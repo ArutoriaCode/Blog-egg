@@ -4,12 +4,12 @@
  * @param {Egg.Application} app - egg application
  */
 module.exports = app => {
-  const { router, controller } = app;
+  const { router, controller, middleware: m } = app;
 
   const v1 = router.namespace('/api/v1');
   v1.get("/posts", controller.post.posts);
   v1.get("/posts/:id", controller.post.detail);
-  v1.post("/posts/create", app.jwt, controller.post.create);
+  v1.post("/posts/create", app.jwt, m.auth(10), controller.post.create);
   v1.post("/user/register", controller.user.create);
   v1.post("/user/token", controller.user.token);
   v1.post("/user/refresh", controller.user.refresh);

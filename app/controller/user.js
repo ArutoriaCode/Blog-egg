@@ -17,6 +17,7 @@ class UserController extends Controller {
         id: user.id,
         username: user.username,
         email: user.email,
+        level: user.level,
         name: "access_token",
         createTime: new Date().getTime()
       },
@@ -30,6 +31,7 @@ class UserController extends Controller {
     const refresh_token = this.app.jwt.sign(
       {
         id: user.id,
+        level: user.level,
         name: "refresh_token",
         createTime: new Date().getTime()
       },
@@ -61,8 +63,7 @@ class UserController extends Controller {
           email: user.email,
           username: user.username,
           id: user.id,
-          avatar: user.avatar,
-          level: user.level
+          avatar: user.avatar
         },
       },
       msg: "注册成功！",
@@ -111,8 +112,7 @@ class UserController extends Controller {
           email: user.email,
           username: user.username,
           id: user.id,
-          avatar: user.avatar,
-          level: user.level
+          avatar: user.avatar
         },
         token: newToken
       }

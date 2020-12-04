@@ -1,6 +1,8 @@
 "use strict";
 
+const ParameterException = require("../../exceptions/ParameterException");
 const Success = require("../../exceptions/Success");
+const bytes = require("humanize-bytes");
 const ValidationPagination = require("../validators/pagination");
 const {
   ValidationCreatePost,
@@ -26,12 +28,22 @@ class PostController extends Controller {
   }
 
   async create() {
+    const files = this.ctx.request.files;
+    if (files && files.length === 0) {
+      ParameterException("文章头图必须上传！");
+    }
+
+    const file = files[0];
+    if (file.size && bytes(file.size) <= 5120) {
+      ParameterException("文章头图必须小于5M");
+    }
+
     const v = await new ValidationCreatePost().validate(this.ctx);
+
     await this.ctx.service.post.create({
       title: v.get("body.title"),
       content: v.get("body.content"),
-      img: v.get("body.img"),
-      user_id: this.ctx.state.user.id
+      file
     });
 
     Success("创建成功！");
