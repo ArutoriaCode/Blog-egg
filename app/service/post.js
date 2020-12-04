@@ -56,7 +56,7 @@ class PostService extends Service {
         user_id: this.ctx.state.user.id
       });
     } catch (error) {
-      console.log("Post CreateError", error);
+      console.error("Post CreateError", error);
       Fail("创建文章失败！");
     }
   }
@@ -67,6 +67,10 @@ class PostService extends Service {
     }
 
     const paragraph = content.blocks.find(b => b.type === "paragraph");
+    if (!paragraph) {
+      return '';
+    }
+
     const text = paragraph.data.text;
     if (text.length > 1) {
       return text.slice(0, 198);

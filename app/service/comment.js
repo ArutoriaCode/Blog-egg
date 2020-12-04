@@ -62,7 +62,8 @@ class CommentService extends Service {
       content,
       type,
       fromId: this.ctx.state.user.id,
-      fromName: this.ctx.state.user.username
+      fromName: this.ctx.state.user.username,
+      avatar: this.ctx.state.user.avatar
     };
 
     let PostModel = null;
