@@ -29,12 +29,14 @@ class CommentService extends Service {
 
   async findAllByGuestBook() {
     const ctx = this.ctx;
-    const offset = toSafeInteger(ctx.query.cuurent) || 0;
-    const limit = toSafeInteger(ctx.query.pageSize) || 8;
+    const limit = toSafeInteger(ctx.query.limit) || 5;
+    const currentPage = toSafeInteger(ctx.query.current) || 1;
+    const offset = (currentPage - 1) <= 0 ? 0 : (currentPage - 1) * limit;
     const query = {
       order: [
         ['created_at', 'DESC']
       ],
+      // 接受的参数是从1开始，但查询时传递应该从0开始
       offset,
       limit,
       where: {
@@ -50,10 +52,13 @@ class CommentService extends Service {
 
     const { count, rows } = await this.ctx.model.Comment.findAndCountAll(query);
     return {
-      total: count,
       data: rows,
-      current: offset,
-      pageSize: limit
+      args: {
+        limit,
+        total: count,
+        current: currentPage,
+        pageSize: Math.ceil(count / limit)
+      }
     };
   }
 
@@ -97,6 +102,7 @@ class CommentService extends Service {
         transaction: t
       });
 
+      // 应审批通过后再对评论数进行累加，但现今还没有后台管理，暂时留着。
       if (PostModel) {
         await PostModel.increment("commentNum", {
           by: 1,

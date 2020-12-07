@@ -6,8 +6,9 @@ const Fail = require("../../exceptions/Fail");
 class PostService extends Service {
   async get() {
     const ctx = this.ctx;
-    const offset = toSafeInteger(ctx.query.cuurent) || 0;
-    const limit = toSafeInteger(ctx.query.pageSize) || 8;
+    const limit = toSafeInteger(ctx.query.limit) || 5;
+    const currentPage = toSafeInteger(ctx.query.current) || 1;
+    const offset = (currentPage - 1) <= 0 ? 0 : (currentPage - 1) * limit;
     const query = {
       offset,
       limit,
@@ -18,10 +19,13 @@ class PostService extends Service {
 
     const { count, rows } = await this.ctx.model.Post.findAndCountAll(query);
     return {
-      total: count,
       data: rows,
-      current: offset,
-      pageSize: limit
+      args: {
+        total: count,
+        current: currentPage,
+        limit,
+        pageSize: Math.ceil(count / limit)
+      }
     };
   }
 
