@@ -2,21 +2,21 @@
 
 class HttpException extends Error {
   /**
-   * @param {*} attributes 附加参数，最终会合并到响应对象中的body，与msg、code同级
+   * @param {*} args 附加参数，最终会合并到响应对象中的body，与msg、code同级
    * {
    *  data: {...},
    *  code: 22,
    *  msg: "",
-   *  ...attributes
+   *  ...args
    * }
    */
-  constructor({ msg, code, status, data, attributes }) {
+  constructor({ msg, code, status, data, args }) {
     super();
     this.msg = msg || '服务器异常';
     this.code = code;
     this.status = status || 500;
     this.data = data || null;
-    this.attributes = attributes;
+    this.args = args;
     this.name = 'HttpException';
   }
 }

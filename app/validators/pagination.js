@@ -6,8 +6,8 @@ class ValidationPagination extends LinValidator {
   constructor() {
     super();
 
-    this.pageSize = [new Rule("isOptional"), new Rule("isInt", "必须是整数")];
-    this.current = [new Rule("isOptional"), new Rule("isInt", "必须是整数")];
+    this.limit = [new Rule("isOptional"), new Rule("isInt", "必须是整数", { min: 5, max: 20 })];
+    this.current = [new Rule("isOptional"), new Rule("isInt", "必须是整数", { min: 1 })];
   }
 }
 

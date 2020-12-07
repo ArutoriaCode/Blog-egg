@@ -63,6 +63,9 @@ module.exports = app => {
           status: {
             [Op.ne]: 0
           }
+        },
+        attributes: {
+          exclude: ["status"]
         }
       }
     }

@@ -24,8 +24,8 @@ function HttpExceptionHandler(err) {
     body.data = err.data;
   }
 
-  if (err.attributes instanceof Object && !isEmpty(err.attributes)) {
-    Object.assign(body, err.attributes);
+  if (err.args instanceof Object && !isEmpty(err.args)) {
+    Object.assign(body, err.args);
   }
 
   return body;
