@@ -44,7 +44,7 @@ module.exports = app => {
       updatedAt: false,
       defaultScope: {
         attributes: {
-          exclude: ["password"]
+          exclude: ["password", "level"]
         }
       },
       scopes: {
