@@ -1,6 +1,8 @@
 "use strict";
 const { COMMENT_TYPE } = require("../../config/keys");
 const { LinValidator, Rule } = require("../../utils/lin-validator");
+const ValidationPagination = require("./pagination");
+const { ValidationGetDetail } = require("./post");
 
 class ValidationCreateComment extends LinValidator {
   constructor() {
@@ -27,6 +29,10 @@ class ValidationCreateComment extends LinValidator {
   }
 }
 
+class ValidationCommentByPost extends (ValidationPagination, ValidationGetDetail) {
+}
+
 module.exports = {
-  ValidationCreateComment
+  ValidationCreateComment,
+  ValidationCommentByPost
 };

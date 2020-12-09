@@ -77,7 +77,7 @@ class PostService extends Service {
 
     const text = paragraph.data.text;
     if (text.length > 1) {
-      return text.slice(0, 198);
+      return text.slice(0, 96) + '...';
     }
     return "";
   }

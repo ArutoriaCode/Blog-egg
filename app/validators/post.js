@@ -1,6 +1,5 @@
 "use strict";
 const { LinValidator, Rule } = require("../../utils/lin-validator");
-
 class ValidationCreatePost extends LinValidator {
   constructor() {
     super();
@@ -19,9 +18,7 @@ class ValidationGetDetail extends LinValidator {
   constructor() {
     super();
 
-    this.id = [
-      new Rule("isInt", "必须是整数")
-    ];
+    this.id = [new Rule("isInt", "必须是整数")];
   }
 }
 

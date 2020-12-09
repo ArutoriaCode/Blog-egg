@@ -19,6 +19,7 @@ module.exports = app => {
   v1.post('/comment/create', app.jwt, controller.comment.create);
   v1.get('/comment/reply', controller.comment.getReply);
   v1.get('/guestbook', controller.comment.guestbook);
+  v1.get('/postComment', controller.comment.byPost);
   v1.post('/upload/avatar', controller.upload.avatar);
   // 服务于Editor.js的link插件
   v1.get('/endpoint', controller.link.index);

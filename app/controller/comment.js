@@ -4,7 +4,11 @@ const ParameterException = require("../../exceptions/ParameterException");
 const Success = require("../../exceptions/Success");
 const ValidationPagination = require("../validators/pagination");
 const { Controller } = require("egg");
-const { ValidationCreateComment } = require("../validators/comment");
+const {
+  ValidationCreateComment,
+  ValidationCommentByPost
+} = require("../validators/comment");
+const { COMMENT_TYPE } = require("../../config/keys");
 
 class CommentController extends Controller {
   async create() {
@@ -21,22 +25,35 @@ class CommentController extends Controller {
 
   async guestbook() {
     await new ValidationPagination().validate(this.ctx);
-    const result = await this.ctx.service.comment.findAllByGuestBook();
+    const result = await this.ctx.service.comment.findAllByType(
+      COMMENT_TYPE.COMMENT
+    );
+    Success(result);
+  }
+
+  async byPost() {
+    const v = await new ValidationCommentByPost().validate(this.ctx);
+    const result = await this.ctx.service.comment.findAllByType(
+      COMMENT_TYPE.POST,
+      { ownerId: v.get("query.id") }
+    );
     Success(result);
   }
 
   async getReply() {
     const commentId = this.ctx.query.commentId;
     if (!commentId) {
-      ParameterException('commentId 必须传递');
+      ParameterException("commentId 必须传递");
     }
 
     const has = await this.ctx.service.comment.get(commentId);
     if (!has) {
-      Fail('该条评论不存在或已被删除！');
+      Fail("该条评论不存在或已被删除！");
     }
 
-    const replys = await this.ctx.service.comment.findReplyByCommentId(commentId);
+    const replys = await this.ctx.service.comment.findReplyByCommentId(
+      commentId
+    );
     Success({
       data: replys
     });

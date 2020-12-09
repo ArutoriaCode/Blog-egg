@@ -21,13 +21,12 @@ class CommentService extends Service {
         ['created_at', 'DESC']
       ],
       where: {
-        commentId,
-        type: COMMENT_TYPE.COMMENT
+        commentId
       }
     });
   }
 
-  async findAllByGuestBook() {
+  async findAllByType(type, otherQuery = {}) {
     const ctx = this.ctx;
     const limit = toSafeInteger(ctx.query.limit) || 5;
     const currentPage = toSafeInteger(ctx.query.current) || 1;
@@ -40,7 +39,8 @@ class CommentService extends Service {
       offset,
       limit,
       where: {
-        type: COMMENT_TYPE.COMMENT,
+        type,
+        ...otherQuery,
         commentId: {
           [Op.is]: null
         },
