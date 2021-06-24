@@ -45,6 +45,25 @@ class UserService extends Service {
 
     return user;
   }
+
+  /**
+   * 封禁某个用户
+   * @param {number} id 要封禁的用户id
+   * @param {object} adminUser 操作员
+   */
+  async banned(id, adminUser) {
+    const user = await this.ctx.service.user.get(id);
+    if (!user) {
+      Fail("该用户不存在");
+    }
+
+    // 无法封禁同级或大于操作员等级权限的用户
+    if (user.level >= adminUser.level) {
+      Fail("无权限操作");
+    }
+
+    await user.update({ level: 0 });
+  }
 }
 
 module.exports = UserService;

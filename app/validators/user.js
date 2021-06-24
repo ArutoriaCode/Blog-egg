@@ -18,8 +18,10 @@ class ValidationCreateUser extends LinValidator {
   }
 
   /** 校验邮箱账号是否已存在
-   * 这里不再使用的原因是每次请求都会查询一次数据库且无论email参数是否正确
-   * 且无法准确的描述用户已存在（抛出的错误都会归类为参数错误，无法设置状态码）
+   * 这里不再使用的原因是
+   * 1、每次请求都会查询一次数据库且无论email参数是否正确
+   * 2、无法准确的描述用户已存在
+   * 3、抛出的错误都会归类为参数错误，无法设置具体含义的状态码
    */
   // async validateEmail(params, model) {
   //   const email = params.body.email;
@@ -51,7 +53,16 @@ class ValidationGetToken extends LinValidator {
   }
 }
 
+class ValidationUserId extends LinValidator {
+  constructor() {
+    super();
+
+    this.id = [new Rule("isInt", "用户id类型不正确")];
+  }
+}
+
 module.exports = {
   ValidationCreateUser,
-  ValidationGetToken
+  ValidationGetToken,
+  ValidationUserId
 };

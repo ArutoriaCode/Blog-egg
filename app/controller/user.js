@@ -1,14 +1,34 @@
 "use strict";
 
-const { LOGIN_SUCEESS, REGISTER_SUCCESS } = require("../../config/codes");
+const { LOGIN_SUCEESS, REGISTER_SUCCESS, BANNED_USER } = require("../../config/codes");
 const Fail = require("../../exceptions/Fail");
 const Success = require("../../exceptions/Success");
 const {
   ValidationCreateUser,
-  ValidationGetToken
+  ValidationGetToken,
+  ValidationUserId
 } = require("../validators/user");
 
 const Controller = require("egg").Controller;
+
+function decodeByToken(token, secret) {
+  if (!token) {
+    return "token: 请传递刷新令牌";
+  }
+
+  let decodedUser = null;
+  try {
+    decodedUser = this.app.jwt.verify(token, secret);
+  } catch (error) {
+    return "无效的刷新令牌";
+  }
+
+  if (decodedUser.name !== "refresh_token" || !decodedUser.id) {
+    return "无效的刷新令牌";
+  }
+
+  return decodedUser;
+}
 
 class UserController extends Controller {
   async sgin(user) {
@@ -64,7 +84,7 @@ class UserController extends Controller {
           username: user.username,
           id: user.id,
           avatar: user.avatar
-        },
+        }
       },
       msg: "注册成功！",
       code: REGISTER_SUCCESS
@@ -77,12 +97,18 @@ class UserController extends Controller {
 
     const { email, password } = v.data.body;
     const user = await ctx.model.User.verifyEmailPassword(email, password);
+    if (user.level === 0) {
+      Fail({
+        msg: '账号已被封禁',
+        code: BANNED_USER
+      });
+    }
 
     const token = await this.sgin(user);
     Success({
       data: {
         token,
-        user,
+        user
       },
       code: LOGIN_SUCEESS
     });
@@ -90,21 +116,12 @@ class UserController extends Controller {
 
   async refresh() {
     const token = this.ctx.request.body.token;
-    if (!token) {
-      Fail("token: 请传递刷新令牌");
-    }
-    let decoded = null;
-    try {
-      decoded = this.app.jwt.verify(token, this.app.config.jwt.secret);
-    } catch (error) {
-      Fail('无效的刷新令牌');
+    const decodedUser = decodeByToken(token, this.app.config.jwt.secret);
+    if (typeof decodeByToken === "string") {
+      Fail(decodedUser);
     }
 
-    if (decoded.name !== 'refresh_token' || !decoded.id) {
-      Fail('无效的刷新令牌');
-    }
-
-    const user = await this.ctx.service.user.get(decoded.id);
+    const user = await this.ctx.service.user.get(decodedUser.id);
     const newToken = await this.sgin(user);
     Success({
       data: {
@@ -117,6 +134,22 @@ class UserController extends Controller {
         token: newToken
       }
     });
+  }
+
+  async banned() {
+    const token = this.ctx.request.body.token;
+    const decodedUser = decodeByToken(token, this.app.config.jwt.secret);
+    if (typeof decodeByToken === "string") {
+      Fail(decodedUser);
+    }
+
+    if (decodedUser.level < 10) {
+      Fail("无权限操作");
+    }
+
+    const v = await new ValidationUserId().validate(this.ctx);
+    await this.ctx.service.banned(v.id);
+    Success("封禁成功");
   }
 }
 
